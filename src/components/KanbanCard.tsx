@@ -1,6 +1,6 @@
 import React from "react";
 import {KanbanItem} from "../service/models";
-import {deleteKanban} from "../service/apiService";
+import {advanceItem, deleteKanban, moveBackItem} from "../service/apiService";
 
 interface KanbanItemProps {
     card: KanbanItem,
@@ -14,12 +14,22 @@ export default function KanbanCard(props: KanbanItemProps) {
             .then(() => props.onChange())
     }
 
+    const moveNext = () => {
+        advanceItem(props.card)
+            .then(() => props.onChange())
+    }
+
+    const moveBack = () => {
+        moveBackItem(props.card)
+            .then(() => props.onChange())
+    }
+
     return <div>
         <p>{props.card.task}</p>
         <p>{props.card.description}</p>
-        <button>prev</button>
+        <button onClick={moveBack}>prev</button>
         <button>edit</button>
-        <button>next</button>
+        <button onClick={moveNext}>next</button>
         <button onClick={onDeleteClick}>delete</button>
     </div>
 }
