@@ -1,6 +1,6 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {getAllKanbans} from "../service/apiService";
-import {KanbanItem} from "../service/models";
+import {KanbanItem, KanbanStatus} from "../service/models";
 import KanbanCard from "./KanbanCard";
 
 interface KanbanGalleryProps {
@@ -10,20 +10,32 @@ interface KanbanGalleryProps {
 
 export default function KanbanGallery(props: KanbanGalleryProps){
 
-    const columns = ["TODO", "IN PROGRESS", "DONE"]
+    const [categorizedTasks, setCategorizedTasks] = useState(new Map<KanbanStatus, KanbanItem[]>())
+
+    useEffect(() => {
+        const taskByStatus = new Map<KanbanStatus, KanbanItem[]>();
+        props.tasks.forEach(task => {
+            let tasksForThisStatus = taskByStatus.get(task.status);
+            if (!tasksForThisStatus) {
+                tasksForThisStatus = []
+                taskByStatus.set(task.status, tasksForThisStatus)
+            }
+            tasksForThisStatus.push(task)
+        })
+        setCategorizedTasks(taskByStatus)
+    }, [props.tasks])
 
     return(
         <div className={'kanbanGallery'}>
             {
-                columns.map(column =>
+                Array.from(categorizedTasks.keys()).map(column =>
                     <div key={column}>
                         <h2>{column}</h2>
                         {
-                            props.tasks.map(task =>
+                            categorizedTasks.get(column)!.map(task =>
                                 <KanbanCard key={task.id} card={task} onChange={props.onChange}/>
                             )
                         }
-
                     </div>
                 )
             }
