@@ -24,12 +24,23 @@ export default function KanbanCard(props: KanbanItemProps) {
             .then(() => props.onChange())
     }
 
+    const deleteButton = <button onClick={onDeleteClick}>delete</button>
+
     return <div>
         <p>{props.card.task}</p>
         <p>{props.card.description}</p>
-        <button onClick={moveBack}>prev</button>
+        {
+            props.card.status === 'OPEN' ?
+                deleteButton
+                :
+                <button onClick={moveBack}>prev</button>
+        }
         <button>edit</button>
-        <button onClick={moveNext}>next</button>
-        <button onClick={onDeleteClick}>delete</button>
+        {
+            props.card.status === 'DONE' ?
+                deleteButton
+                :
+                <button onClick={moveNext}>next</button>
+        }
     </div>
 }
