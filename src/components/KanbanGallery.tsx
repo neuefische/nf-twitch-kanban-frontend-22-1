@@ -1,8 +1,16 @@
 import React from "react";
+import {getAllKanbans} from "../service/apiService";
+import {KanbanItem} from "../service/models";
+import KanbanCard from "./KanbanCard";
 
-export default function KanbanGallery(){
+interface KanbanGalleryProps {
+    tasks: KanbanItem[],
+}
+
+export default function KanbanGallery(props: KanbanGalleryProps){
 
     const columns = ["TODO", "IN PROGRESS", "DONE"]
+    const x = getAllKanbans()
 
     return(
         <div className={'kanbanGallery'}>
@@ -10,13 +18,12 @@ export default function KanbanGallery(){
                 columns.map(column =>
                     <div key={column}>
                         <h2>{column}</h2>
-                        <div>
-                            <p>Hunde füttern</p>
-                            <p>Futter einkaufen</p>
-                            <button>prev</button>
-                            <button>edit</button>
-                            <button>next</button>
-                        </div>
+                        {
+                            props.tasks.map(task =>
+                                <KanbanCard card={task}/>
+                            )
+                        }
+
                     </div>
                 )
             }
