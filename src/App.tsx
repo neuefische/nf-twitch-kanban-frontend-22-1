@@ -10,18 +10,22 @@ export default function App() {
 
     const [tasks, setTasks] = useState<KanbanItem[]>();
 
-    useEffect(() => {
+    const fetchAllItems = () => {
         getAllKanbans()
             .then(tasksFromServer => setTasks(tasksFromServer))
+    }
+
+    useEffect(() => {
+        fetchAllItems()
     }, [])
 
     return (
         <div className="App">
             <Headline/>
-            <CreateForm/>
+            <CreateForm onCreate={fetchAllItems}/>
             {
                 tasks ?
-                    <KanbanGallery tasks={tasks}/>
+                    <KanbanGallery tasks={tasks} onChange={fetchAllItems}/>
                     : <div>'Lade...'</div>
             }
 

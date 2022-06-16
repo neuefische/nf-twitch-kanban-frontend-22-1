@@ -4,12 +4,14 @@ import {deleteKanban} from "../service/apiService";
 
 interface KanbanItemProps {
     card: KanbanItem,
+    onChange: () => void,
 }
 
 export default function KanbanCard(props: KanbanItemProps) {
 
     const onDeleteClick = () => {
         deleteKanban(props.card.id)
+            .then(() => props.onChange())
     }
 
     return <div>

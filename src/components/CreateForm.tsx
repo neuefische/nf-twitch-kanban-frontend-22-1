@@ -1,7 +1,11 @@
 import React, {useState} from "react";
 import {saveNewKanban} from "../service/apiService";
 
-export default function CreateForm() {
+interface CreateFormInterface {
+    onCreate : () => void
+}
+
+export default function CreateForm(props : CreateFormInterface) {
 
     const [task, setTask] = useState('')
     const [description, setDescription] = useState('')
@@ -12,6 +16,7 @@ export default function CreateForm() {
                 setTask('')
                 setDescription('')
             })
+            .then(() => props.onCreate())
             .catch(err => console.log(err.message))
     }
 

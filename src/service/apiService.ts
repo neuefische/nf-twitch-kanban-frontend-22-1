@@ -9,6 +9,7 @@ export const saveNewKanban = (item : Omit<KanbanItem, 'id'>) => {
 export const getAllKanbans = () => {
     return axios.get("/api/kanban")
         .then(response => response.data)
+
 }
 
 export const deleteKanban = (id: string) => {

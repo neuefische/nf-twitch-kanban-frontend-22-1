@@ -5,12 +5,12 @@ import KanbanCard from "./KanbanCard";
 
 interface KanbanGalleryProps {
     tasks: KanbanItem[],
+    onChange: () => void,
 }
 
 export default function KanbanGallery(props: KanbanGalleryProps){
 
     const columns = ["TODO", "IN PROGRESS", "DONE"]
-    const x = getAllKanbans()
 
     return(
         <div className={'kanbanGallery'}>
@@ -20,7 +20,7 @@ export default function KanbanGallery(props: KanbanGalleryProps){
                         <h2>{column}</h2>
                         {
                             props.tasks.map(task =>
-                                <KanbanCard card={task}/>
+                                <KanbanCard key={task.id} card={task} onChange={props.onChange}/>
                             )
                         }
 
