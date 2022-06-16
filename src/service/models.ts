@@ -4,7 +4,7 @@ export type KanbanStatus =
     'DONE'
 
 export interface KanbanItem {
-    id?: string,
+    id: string,
     task: string,
     description: string,
     status: KanbanStatus,
