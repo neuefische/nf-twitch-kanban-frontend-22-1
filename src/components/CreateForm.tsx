@@ -1,6 +1,5 @@
 import React, {useState} from "react";
-import axios from "axios";
-import {KanbanStatus} from "../service/models";
+import {saveNewKanban} from "../service/apiService";
 
 export default function CreateForm() {
 
@@ -8,11 +7,12 @@ export default function CreateForm() {
     const [description, setDescription] = useState('')
 
     const sendData = () => {
-        axios.post("/api/kanban", {
-            task,
-            description,
-            status : KanbanStatus.OPEN
-        })
+        saveNewKanban({task,description,status:'OPEN'})
+            .then(()=>{
+                setTask('')
+                setDescription('')
+            })
+            .catch(err => console.log(err.message))
     }
 
     return <div>
