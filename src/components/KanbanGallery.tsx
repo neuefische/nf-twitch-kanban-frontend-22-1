@@ -8,7 +8,7 @@ interface KanbanGalleryProps {
     onChange: () => void,
 }
 
-export default function KanbanGallery(props: KanbanGalleryProps){
+export default function KanbanGallery(props: KanbanGalleryProps) {
 
     const [categorizedTasks, setCategorizedTasks] = useState(new Map<KanbanStatus, KanbanItem[]>())
 
@@ -25,14 +25,29 @@ export default function KanbanGallery(props: KanbanGalleryProps){
         setCategorizedTasks(taskByStatus)
     }, [props.tasks])
 
-    return(
+    const columns: { title: string, status: KanbanStatus }[] = [
+        {
+            title: 'Offen',
+            status: 'OPEN',
+        },
+        {
+            title: 'In Arbeit',
+            status: 'IN_PROGRESS',
+        },
+        {
+            title: 'Fertig',
+            status: 'DONE',
+        }
+    ]
+
+    return (
         <div className={'kanbanGallery'}>
             {
-                Array.from(categorizedTasks.keys()).map(column =>
-                    <div key={column}>
-                        <h2>{column}</h2>
+                columns.map(column =>
+                    <div key={column.status}>
+                        <h2>{column.title}</h2>
                         {
-                            categorizedTasks.get(column)!.map(task =>
+                            (categorizedTasks.get(column.status) || []).map(task =>
                                 <KanbanCard key={task.id} card={task} onChange={props.onChange}/>
                             )
                         }

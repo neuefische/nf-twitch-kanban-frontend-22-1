@@ -33,14 +33,14 @@ export default function KanbanCard(props: KanbanItemProps) {
             props.card.status === 'OPEN' ?
                 deleteButton
                 :
-                <button onClick={moveBack}>prev</button>
+                <button className={'button'} onClick={moveBack}>prev</button>
         }
-        <button>edit</button>
+        <button className={'button'}>edit</button>
         {
             props.card.status === 'DONE' ?
                 deleteButton
                 :
-                <button onClick={moveNext}>next</button>
+                <button className={'button'} onClick={moveNext}>next</button>
         }
     </div>
 }

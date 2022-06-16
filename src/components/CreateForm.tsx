@@ -23,6 +23,6 @@ export default function CreateForm(props : CreateFormInterface) {
     return <div>
         <input type="text" placeholder={'Neue Task'} value={task} onChange={ev => setTask(ev.target.value)}/>
         <input type="text" placeholder={'Beschreibung'} value={description} onChange={ev => setDescription(ev.target.value)}/>
-        <button onClick={sendData}>save</button>
+        <button className={'button'} onClick={sendData}>save</button>
     </div>
 }
